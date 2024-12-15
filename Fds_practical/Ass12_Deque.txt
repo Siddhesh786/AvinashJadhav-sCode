@@ -1,0 +1,176 @@
+#include <iostream>
+using namespace std;
+#define SIZE 5
+
+class dqueue{
+    int a[10], front, rear;
+
+public:
+    dqueue();
+    bool isFull();
+    bool isEmpty();
+    void EnqueueAt1(int);
+    void EnqueueAt2(int);
+    void DequeueAt1();
+    void DequeueAt2();
+    void display();
+};
+
+dqueue::dqueue() {
+    front = -1;
+    rear = -1;
+}
+
+bool dqueue::isFull(){
+	return ((front == 0 && rear == SIZE-1) || rear+1 == front);
+}
+	
+bool dqueue::isEmpty(){
+	return (front == -1);
+}
+	
+void dqueue::EnqueueAt1(int item) {
+    if (isFull()) {
+        cout << "Deque is full\n";
+        return;
+    }
+    if (front == -1) { // First element
+        front = rear = 0;
+    } 
+	else if (front == 0) {
+        front = SIZE - 1;
+    } 
+	else {
+        front--;
+    }
+    a[front] = item;
+    cout<<item<<" Enqueue At front."
+}
+
+void dqueue::EnqueueAt2(int item) {
+    if (isFull()) {
+        cout << "Deque is full\n";
+        return;
+    }
+    if (front == -1) { // First element
+        front= rear = 0;
+    }
+	else if (rear == SIZE - 1) {
+        rear = 0;
+    } 
+	else {
+        rear++;
+    }
+    a[rear] = item;
+    cout<<item<<" Enqueue At rear."
+}
+
+void dqueue::display() {
+	if(isEmpty()){
+		cout<<"\ndqueue is Empty! no Elements present"<<endl;
+	}
+	else{
+		int i = front ;  
+	    while(i != rear + 1){
+	    	cout<<a[i]<<" ";
+	    	i = (i+1) % SIZE;
+		}	
+	}
+}
+
+void dqueue::DequeueAt1() {
+    if (isEmpty()) {
+        cout << "Deque is empty\n";
+        return;
+    }
+    else{
+    	int val = a[front];
+    	
+        if(front == rear) { // Only one element exist
+            front = rear = -1;
+        }else if (front == SIZE - 1) {
+            front = 0;
+        }else {
+            front++;
+        }
+        cout<<"\nElement removed from front : "<<val<<endl;
+	}
+
+}
+
+void dqueue::DequeueAt2() {
+    if (front == -1) {
+        cout << "Deletion is not possible ! Dequeue is empty";
+        return;
+    } else {
+    	int val = a[rear];
+    	
+    	if(rear == front){
+    		front = rear =-1;
+		}
+		else if(rear == 0){
+			rear = SIZE - 1;
+		}
+		else{
+			rear --;
+		}
+		cout<<"\nElement removed front the End : "<<val<<endl;
+    }
+}
+
+int main() {
+    int ch;
+    dqueue d1;
+    
+    cout << "\n\n****DEQUEUE OPERATIONS****\n";
+    
+    cout << "\n1. Insert at beginning";
+    cout << "\n2. Insert at end";
+    cout << "\n3. Display";
+    cout << "\n4. Deletion from front";
+    cout << "\n5. Deletion from rear";
+    cout << "\n6. Exit";
+
+    do {  
+        cout << "\nEnter your choice : ";
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+            	int item;
+                cout << "Enter the element to be inserted : ";
+                cin >> item;
+                d1.EnqueueAt1(item);
+                break;
+
+            case 2:
+                cout << "Enter the element to be inserted: ";
+                cin >> item;
+                d1.EnqueueAt2(item);
+                break;
+
+            case 3:
+                d1.display();
+                break;
+
+            case 4:
+                d1.DequeueAt1();
+                break;
+
+            case 5:
+                d1.DequeueAt2();
+                break;
+
+            case 6:
+                cout << "\nExiting the program...";
+                break;
+
+            default:
+                cout << "Invalid choice !!";
+                break;
+        }
+
+    } while (ch != 6);
+
+    return 0;
+}

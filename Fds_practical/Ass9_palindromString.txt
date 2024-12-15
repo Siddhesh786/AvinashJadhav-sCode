@@ -1,0 +1,80 @@
+#include<iostream>
+# define max 40
+#include<string.h>
+using namespace std;
+
+class Stack{
+	char a[max];
+	int top;
+	
+public:
+	Stack(){
+		top = -1;
+	}
+	
+	void push(char);
+	void convert(char str[]);
+	void reverse();
+	void palindrom();
+};
+
+void Stack::push(char c){
+	top++;
+	a[top] = c;
+	a[top + 1] = '\0';
+	cout<<endl<<c<<" is pushed onto stack....";
+}
+
+void Stack::convert(char str[]) {
+    int k = 0;
+    for (int j = 0; j <= strlen(str); j++) {
+        if (isalpha(str[j])) {
+            if (int(str[j]) <= 90) {
+                str[k] = char(int(str[j]) + 32);
+            } else {
+                str[k] = str[j];                
+            }
+            k++;            
+        }
+    }
+    str[k] = '\0';
+    cout << endl << "Converted String : " << str << "\n";
+}
+
+void Stack::reverse(){
+	cout<<"\nReverse string is ";
+	for(int i = top; i >= 0; i--){
+		cout<<a[i];
+	}	
+}
+
+void Stack::palindrom() {
+    for (int i = 0; i <= top / 2; i++) {
+        if (a[i] != a[top - i]) {
+            cout << "\n\nString  is not palindrome...";
+            return;
+        }
+    }
+    cout << "\n\nString is palindrome...";
+}
+
+int main(){
+	Stack s1;
+	char str[max];
+	
+	cout<<"Enetr the string to be check palindrom or not : ";
+	cin.getline(str, max);
+	
+	s1.convert(str);
+	
+	int i = 0;
+	while(str[i] != '\0'){
+		s1.push(str[i]);
+		i++;
+	}
+	
+	s1.palindrom();
+    s1.reverse();
+	
+	return 0;
+}
